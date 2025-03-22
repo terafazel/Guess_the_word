@@ -1,0 +1,47 @@
+import random  # Import random module to pick a random word
+
+# Step 1: Word selection
+word_list = ['apple', 'banana', 'orange', 'chikoo'] 
+secret_word = random.choice(word_list)
+
+# Step 2: Game setup
+guessed_letters = []
+attempts = int(input('Give the number of attempts that you think you will need to crack the code: '))
+
+# Step 3: Game loop
+while attempts > 0:
+    display_word = ''
+    
+    # Step 4: Build display word with guessed letters
+    for letter in secret_word:
+        if letter in guessed_letters:
+            display_word += letter + ' '
+        else:
+            display_word += '_ '
+    
+    print(f"\nWord: {display_word.strip()}")
+
+    # Step 5: Win condition
+    if all(letter in guessed_letters for letter in secret_word):
+        print('🎉 Congratulations! You guessed the word correctly!')
+        break
+
+    # Step 6: Ask user for a guess
+    guess = input("Guess a letter: ").lower()
+
+    # Step 7: Check the guess
+    if guess in guessed_letters:
+        print('⚠️ You already guessed that letter.')
+    elif guess in secret_word:
+        guessed_letters.append(guess)
+        print('✅ Correct guess!')
+    else:
+        guessed_letters.append(guess)
+        attempts -= 1
+        print('❌ Wrong guess.')
+
+    print(f"Attempts left: {attempts}")
+
+# Step 8: Out of attempts
+if attempts == 0:
+    print(f"😢 You ran out of attempts. The word was '{secret_word}'.")
